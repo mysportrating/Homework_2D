@@ -79,4 +79,5 @@ public class PlayerMover : MonoBehaviour
             _cooldownTimer = _boostDuration;
         }
     }
+
 }
