@@ -4,22 +4,28 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerMover))]
+[RequireComponent(typeof(PlayerAnimator))]
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
-    private PlayerMover _playerMover;
+    private PlayerMover _mover;
+    private PlayerAnimator _animator;
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
-        _playerMover = GetComponent<PlayerMover>();
+        _mover = GetComponent<PlayerMover>();
+        _animator = GetComponent<PlayerAnimator>();
     }
     private void FixedUpdate()
     {
+        // «апуск анимации движени€ игрока
+        _animator.SetSpeed(Mathf.Abs(_inputReader._moveDirection.x) + Mathf.Abs(_inputReader._moveDirection.y));
+
         // ¬ыполн€ем движение в сторону направлени€ вектора, если вектор существуует
         if (_inputReader._moveDirection != null)
         {
-            _playerMover.Move(_inputReader._moveDirection);
+            _mover.Move(_inputReader._moveDirection);
         }
 
         // Ќормализуем вектор движени€, чтобы диагональное движение не было быстрее
