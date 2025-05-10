@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 {
-    private const string HORIZONTAL_AXIS = "Horizontal";
-    private const string VERTICAL_AXIS = "Vertical";
-
     [SerializeField] private float _playerSpeed = 2.0f;
     [SerializeField] private float _boostedSpeed = 4.0f;
     [SerializeField] private float _cooldownTimer = 0f;
@@ -15,31 +12,37 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _boostCooldown = 2.0f;
 
     private Rigidbody2D _rigidbody;
-    private Vector2 _movement;
     private bool _isBoosted;
+    private bool _isTurnedRight = true;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    public void Move(Vector2 moveDirection)
     {
-        // Получаем ввод с клавиатуры
-        _movement.x = Input.GetAxis(HORIZONTAL_AXIS);
-        _movement.y = Input.GetAxis(VERTICAL_AXIS);
+        // Перемещение игрока
+        float currentSpeed = _isBoosted ? _boostedSpeed : _playerSpeed;
+        _rigidbody.velocity = moveDirection * currentSpeed;
 
-        // Нормализуем вектор движения, чтобы диагональное движение не было быстрее
-        if (_movement.magnitude > 0)
+        // Смена направления взгляда игрока
+        if ((moveDirection.x > 0 && !_isTurnedRight) || (moveDirection.x < 0 && _isTurnedRight))
         {
-            _movement.Normalize();
+            Flip();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TryBoost();
-        }
+    public void Flip()
+    {
+        _isTurnedRight = !_isTurnedRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
 
+    public void CooldownTimerUpdate()
+    {
         // Обновление таймеров
         if (_isBoosted)
         {
@@ -56,28 +59,13 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        // Перемещение игрока
-        float currentSpeed = _isBoosted ? _boostedSpeed : _playerSpeed;
-        _rigidbody.velocity = _movement * currentSpeed;
-
-        /*
-        if(_isBoosted)
-        {
-            _rigidbody.AddForce(_rigidbody.velocity * _boostedSpeed);
-            _isBoosted = false;
-        }
-        */
-    }
-    private void TryBoost()
+    public void TryBoost(Vector2 moveDirection)
     {
         // Проверяем, можно ли использовать ускорение
-        if (!_isBoosted && _cooldownTimer <= 0 && _movement.magnitude > 0)
+        if (!_isBoosted && _cooldownTimer <= 0 && moveDirection.magnitude > 0)
         {
             _isBoosted = true;
             _cooldownTimer = _boostDuration;
         }
     }
-
 }
