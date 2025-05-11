@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
@@ -12,18 +13,19 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _boostCooldown = 2.0f;
 
     private Rigidbody2D _rigidbody;
-    private bool _isBoosted;
+    private InputReader _inputReader;
     private bool _isTurnedRight = true;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _inputReader = GetComponent<InputReader>();
     }
 
     public void Move(Vector2 moveDirection)
     {
         // Перемещение игрока
-        float currentSpeed = _isBoosted ? _boostedSpeed : _playerSpeed;
+        float currentSpeed = _inputReader.IsBoosted ? _boostedSpeed : _playerSpeed;
         _rigidbody.velocity = moveDirection * currentSpeed;
 
         // Смена направления взгляда игрока
@@ -44,12 +46,12 @@ public class PlayerMover : MonoBehaviour
     public void CooldownTimerUpdate()
     {
         // Обновление таймеров
-        if (_isBoosted)
+        if (_inputReader.IsBoosted)
         {
             _cooldownTimer -= Time.deltaTime;
             if (_cooldownTimer <= 0)
             {
-                _isBoosted = false;
+                _inputReader.IsBoosted = false;
                 _cooldownTimer = _boostCooldown;
             }
         }
@@ -62,9 +64,8 @@ public class PlayerMover : MonoBehaviour
     public void TryBoost(Vector2 moveDirection)
     {
         // Проверяем, можно ли использовать ускорение
-        if (!_isBoosted && _cooldownTimer <= 0 && moveDirection.magnitude > 0)
+        if (_inputReader.IsBoosted && _cooldownTimer <= 0 && moveDirection.magnitude > 0)
         {
-            _isBoosted = true;
             _cooldownTimer = _boostDuration;
         }
     }

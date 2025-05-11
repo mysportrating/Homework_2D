@@ -8,6 +8,10 @@ public class InputReader : MonoBehaviour
     private const string VERTICAL_AXIS = "Vertical";
 
     public Vector2 _moveDirection;
+
+
+    public bool IsBoosted { get; set; }
+
     private void Update()
     {
         // Получаем ввод с клавиатуры
@@ -17,7 +21,7 @@ public class InputReader : MonoBehaviour
         // Ускорение игрока (получаем ввод и обрабатываем логику)
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //TryBoost();
+            IsBoosted = true;
         }
     }
 }

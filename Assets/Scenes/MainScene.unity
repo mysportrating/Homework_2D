@@ -23581,7 +23581,7 @@ MonoBehaviour:
   _boostedSpeed: 5
   _cooldownTimer: 0
   _boostDuration: 0.5
-  _boostCooldown: 2
+  _boostCooldown: 1
 --- !u!70 &2117936434
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
