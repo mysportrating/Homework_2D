@@ -4,19 +4,34 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerMover))]
-[RequireComponent(typeof(PlayerAnimator))]
+[RequireComponent(typeof(PlayerAnimator), typeof(CollisionHandler))]
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
     private PlayerMover _mover;
     private PlayerAnimator _animator;
+    private CollisionHandler _collisionHandler;
+
+    private IInteractable _iInteractable;
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<PlayerMover>();
         _animator = GetComponent<PlayerAnimator>();
+        _collisionHandler = GetComponent<CollisionHandler>();
     }
+
+    private void OnEnable()
+    {
+        _collisionHandler.BridgeReached += OnBridgeReached;
+    }
+
+    private void OnDisable()
+    {
+        _collisionHandler.BridgeReached -= OnBridgeReached;
+    }
+
     private void FixedUpdate()
     {
         // Запуск анимации движения игрока
@@ -40,5 +55,16 @@ public class Player : MonoBehaviour
             //_mover.TryBoost(_inputReader._moveDirection);
             _mover.CooldownTimerUpdate();
         }
+
+        // Проверяем взаимодействие с мостом
+        if (_inputReader.GetIsInteract() && _iInteractable != null)
+        {
+            _iInteractable.Interact();
+        }
+    }
+
+    private void OnBridgeReached (IInteractable bridgeBehaviour)
+    {
+        _iInteractable = bridgeBehaviour;
     }
 }
