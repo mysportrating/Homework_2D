@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class ConstantsData
 {
+    // Данные для Аниматора
     public static class AnimatorParameters
     {
         public static readonly int Speed = Animator.StringToHash(nameof(Speed));
@@ -11,6 +12,7 @@ public static class ConstantsData
         public static readonly int IsOff = Animator.StringToHash(nameof(IsOff));
     }
 
+    // Данные для ввода с клавиатуры
     public static class InputData
     {
         public const string HORIZONTAL_AXIS = "Horizontal";

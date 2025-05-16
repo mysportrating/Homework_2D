@@ -6,25 +6,41 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 {
-    [SerializeField] private float _playerSpeed = 2.0f;
-    [SerializeField] private float _boostedSpeed = 4.0f;
-    [SerializeField] private float _cooldownTimer = 0f;
-    [SerializeField] private float _boostDuration = 0.5f;
-    [SerializeField] private float _boostCooldown = 2.0f;
+    [SerializeField] private float _normalSpeed = 3.0f;
+    [SerializeField] private float _boostedSpeed = 5.0f;
+    [SerializeField] private float _currentSpeed = 3.0f;
+    [SerializeField] private float _cooldownTimer = 0.0f;
+    [SerializeField] private float _boostDuration = 1.0f;
+    [SerializeField] private float _boostCooldown = 4.0f;
 
     private Rigidbody2D _rigidbody;
     private bool _isTurnedRight = true;
 
     private void Start()
     {
+        // Получаем необходимые компоненты объекта
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void Move(Vector2 moveDirection, bool IsBoosted)
+    public void Move(Vector2 moveDirection, bool isBoosted)
     {
-        // Осуществляем перемещение игрока с учетом скорости в зависимости от состояния IsBoosted (ускоренно или обычное)
-        float currentSpeed = IsBoosted ? _boostedSpeed : _playerSpeed;
-        _rigidbody.velocity = moveDirection * currentSpeed;
+        // Осуществляем перемещение игрока в направлении вектора
+        _rigidbody.velocity = moveDirection * _currentSpeed;
+
+        // Обновление таймера ускорения и установка скорости игрока
+        if (_cooldownTimer > 0)
+        {
+            _cooldownTimer -= Time.deltaTime;
+        }
+        if (isBoosted && _cooldownTimer <= 0)
+        {
+            _currentSpeed = _boostedSpeed;
+            _cooldownTimer = _boostCooldown;
+        }
+        if (_boostCooldown >= _cooldownTimer + _boostDuration)
+        {
+            _currentSpeed = _normalSpeed;
+        }
 
         // Смена направления взгляда игрока
         if ((moveDirection.x > 0 && !_isTurnedRight) || (moveDirection.x < 0 && _isTurnedRight))
@@ -39,32 +55,5 @@ public class PlayerMover : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
-    }
-
-    public void CooldownTimerUpdate(bool IsBoosted)
-    {
-        // Обновление таймеров
-        if (IsBoosted)
-        {
-            _cooldownTimer -= Time.deltaTime;
-            if (_cooldownTimer <= 0)
-            {
-                IsBoosted = false;
-                _cooldownTimer = _boostCooldown;
-            }
-        }
-        else if (_cooldownTimer > 0)
-        {
-            _cooldownTimer -= Time.deltaTime;
-        }
-    }
-
-    public void TryBoost(Vector2 moveDirection, bool IsBoosted)
-    {
-        // Проверяем, можно ли использовать ускорение
-        if (IsBoosted && _cooldownTimer <= 0 && moveDirection.magnitude > 0)
-        {
-            _cooldownTimer = _boostDuration;
-        }
     }
 }

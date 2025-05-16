@@ -7,8 +7,7 @@ public class InputReader : MonoBehaviour
     public Vector2 _moveDirection;
     
     private bool _isInteract;
-
-    public bool IsBoosted { get; set; }
+    private bool _isBoosted;
 
     private void Update()
     {
@@ -16,18 +15,17 @@ public class InputReader : MonoBehaviour
         _moveDirection.x = Input.GetAxis(ConstantsData.InputData.HORIZONTAL_AXIS);
         _moveDirection.y = Input.GetAxis(ConstantsData.InputData.VERTICAL_AXIS);
 
-        // Ускорение игрока (получаем ввод и обрабатываем логику)
+        // Задаем ускорение игроку через ввод с клавиатуры
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            IsBoosted = true;
-        }
+            _isBoosted = true;
 
+        // Взаимодействуем с интерактивными предметами через ввод с клавиатуры
         if (Input.GetKeyDown(KeyCode.F))
-        {
             _isInteract = true;
-        }
     }
 
+    // Задаем значение булевых переменных через тригер
+    public bool GetIsBoosted() => GetBoolAsTrigger(ref _isBoosted);
     public bool GetIsInteract() => GetBoolAsTrigger(ref _isInteract);
 
     private bool GetBoolAsTrigger(ref bool value)

@@ -9,6 +9,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void SetSpeed (float speed)
     {
+        // Передаем значение переменной в параметры Аниматора
         _animator.SetFloat(ConstantsData.AnimatorParameters.Speed, speed);
     }
 }
