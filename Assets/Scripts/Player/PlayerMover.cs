@@ -13,19 +13,17 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _boostCooldown = 2.0f;
 
     private Rigidbody2D _rigidbody;
-    private InputReader _inputReader;
     private bool _isTurnedRight = true;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _inputReader = GetComponent<InputReader>();
     }
 
-    public void Move(Vector2 moveDirection)
+    public void Move(Vector2 moveDirection, bool IsBoosted)
     {
-        // ѕеремещение игрока
-        float currentSpeed = _inputReader.IsBoosted ? _boostedSpeed : _playerSpeed;
+        // ќсуществл€ем перемещение игрока с учетом скорости в зависимости от состо€ни€ IsBoosted (ускоренно или обычное)
+        float currentSpeed = IsBoosted ? _boostedSpeed : _playerSpeed;
         _rigidbody.velocity = moveDirection * currentSpeed;
 
         // —мена направлени€ взгл€да игрока
@@ -43,15 +41,15 @@ public class PlayerMover : MonoBehaviour
         transform.localScale = scale;
     }
 
-    public void CooldownTimerUpdate()
+    public void CooldownTimerUpdate(bool IsBoosted)
     {
         // ќбновление таймеров
-        if (_inputReader.IsBoosted)
+        if (IsBoosted)
         {
             _cooldownTimer -= Time.deltaTime;
             if (_cooldownTimer <= 0)
             {
-                _inputReader.IsBoosted = false;
+                IsBoosted = false;
                 _cooldownTimer = _boostCooldown;
             }
         }
@@ -61,10 +59,10 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
-    public void TryBoost(Vector2 moveDirection)
+    public void TryBoost(Vector2 moveDirection, bool IsBoosted)
     {
         // ѕровер€ем, можно ли использовать ускорение
-        if (_inputReader.IsBoosted && _cooldownTimer <= 0 && moveDirection.magnitude > 0)
+        if (IsBoosted && _cooldownTimer <= 0 && moveDirection.magnitude > 0)
         {
             _cooldownTimer = _boostDuration;
         }

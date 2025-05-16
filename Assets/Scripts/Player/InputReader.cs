@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    
-
     public Vector2 _moveDirection;
     
     private bool _isInteract;
@@ -14,7 +12,7 @@ public class InputReader : MonoBehaviour
 
     private void Update()
     {
-        // Получаем ввод с клавиатуры
+        // Получаем направление перемещения игрока через ввод с клавиатуры
         _moveDirection.x = Input.GetAxis(ConstantsData.InputData.HORIZONTAL_AXIS);
         _moveDirection.y = Input.GetAxis(ConstantsData.InputData.VERTICAL_AXIS);
 

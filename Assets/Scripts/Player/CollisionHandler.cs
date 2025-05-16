@@ -14,4 +14,12 @@ public class CollisionHandler : MonoBehaviour
             BridgeReached?.Invoke(bridgeBehaviour);
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out IInteractable _))
+        {
+            BridgeReached?.Invoke(null);
+        }
+    }
 }

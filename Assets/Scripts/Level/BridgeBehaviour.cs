@@ -1,9 +1,19 @@
 using UnityEngine;
+using System.Linq;
 
-public class BridgeBehaviour : MonoBehaviour, IInteractable
+public class BridgeBehaviour : MonoBehaviour
 {
-    public void Interact()
+    [SerializeField] private Switch[] _switches; 
+
+    public void FixedUpdate()
     {
-        gameObject.SetActive(false);
+        if (_switches.All(i => i.IsActive))
+        {
+            gameObject.SetActive(false);
+        } 
+        else 
+        {
+            gameObject.SetActive(true);
+        }
     }
 }
