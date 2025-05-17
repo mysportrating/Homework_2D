@@ -38,15 +38,11 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // «апуск анимации движени€ игрока
-        _animator.SetSpeed(Mathf.Abs(_inputReader._moveDirection.x) + Mathf.Abs(_inputReader._moveDirection.y));
-
-        // Ќормализуем вектор движени€, чтобы диагональное движение не было быстрее
-        if (_inputReader._moveDirection.magnitude > 0)
-            _inputReader._moveDirection.Normalize();
+        _animator.SetSpeed(Mathf.Abs(_inputReader.Horizontal) + Mathf.Abs(_inputReader.Vertical));
 
         // ¬ыполн€ем движение игрока в сторону направлени€ вектора, если вектор существует
-        if (_inputReader._moveDirection != null)
-            _mover.Move(_inputReader._moveDirection, _inputReader.GetIsBoosted());
+        if (_inputReader.MoveDirection != null)
+            _mover.Move(_inputReader.MoveDirection, _inputReader.GetIsBoosted());
 
         // ѕровер€ем взаимодействие с интерактивными предметами
         if (_inputReader.GetIsInteract() && _iInteractable != null)

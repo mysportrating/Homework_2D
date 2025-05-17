@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    public Vector2 _moveDirection;
+    public Vector2 MoveDirection { get; private set; }
+    public float Horizontal { get; private set; }
+    public float Vertical { get; private set; }
     
     private bool _isInteract;
     private bool _isBoosted;
@@ -12,8 +14,9 @@ public class InputReader : MonoBehaviour
     private void Update()
     {
         // ѕолучаем направление перемещени€ игрока через ввод с клавиатуры
-        _moveDirection.x = Input.GetAxis(ConstantsData.InputData.HORIZONTAL_AXIS);
-        _moveDirection.y = Input.GetAxis(ConstantsData.InputData.VERTICAL_AXIS);
+        Horizontal = Input.GetAxis(ConstantsData.InputData.HORIZONTAL_AXIS);
+        Vertical = Input.GetAxis(ConstantsData.InputData.VERTICAL_AXIS);
+        MoveDirection = new Vector2(Horizontal, Vertical).normalized;  // + Ќормализуем вектор движени€, чтобы диагональное движение не было быстрее
 
         // «адаем ускорение игроку через ввод с клавиатуры
         if (Input.GetKeyDown(KeyCode.Space))
