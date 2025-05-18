@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(Animator))]
 
-public class Switch : MonoBehaviour, IInteractable
+public class SwitchBehaviourScript : MonoBehaviour, IInteractable
 {
     private Animator _animator;
     public bool IsActive {  get; private set; }
@@ -18,12 +18,10 @@ public class Switch : MonoBehaviour, IInteractable
     {
         IsActive = !IsActive;
 
+        // Запускаем анимацию при взаимодействии с Switch
         if (IsActive)
-        {
             _animator.SetTrigger(ConstantsData.AnimatorParameters.IsOn);
-        } else
-        {
+        else
             _animator.SetTrigger(ConstantsData.AnimatorParameters.IsOff);
-        }
     }
 }

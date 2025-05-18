@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     private PlayerAnimator _animator;
     private CollisionHandler _collisionHandler;
 
-    private IInteractable _iInteractable;
+    private IInteractable _interactable;
 
     private void Awake()
     {
@@ -26,13 +26,13 @@ public class Player : MonoBehaviour
     // Подписываемся на события
     private void OnEnable()
     {
-        _collisionHandler.BridgeReached += OnBridgeReached;
+        _collisionHandler.ObjectReached += OnObjectReached;
     }
 
     // Отписываемся от событий
     private void OnDisable()
     {
-        _collisionHandler.BridgeReached -= OnBridgeReached;
+        _collisionHandler.ObjectReached -= OnObjectReached;
     }
 
     private void FixedUpdate()
@@ -45,12 +45,12 @@ public class Player : MonoBehaviour
             _mover.Move(_inputReader.MoveDirection, _inputReader.GetIsBoosted());
 
         // Проверяем взаимодействие с интерактивными предметами
-        if (_inputReader.GetIsInteract() && _iInteractable != null)
-            _iInteractable.Interact();
+        if (_inputReader.GetIsInteract() && _interactable != null)
+            _interactable.Interact();
     }
 
-    private void OnBridgeReached (IInteractable bridgeBehaviour)
+    private void OnObjectReached (IInteractable interactable)
     {
-        _iInteractable = bridgeBehaviour;
+        _interactable = interactable;
     }
 }
