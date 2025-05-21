@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
@@ -45,15 +42,8 @@ public class PlayerMover : MonoBehaviour
         // Смена направления взгляда игрока
         if ((moveDirection.x > 0 && !_isTurnedRight) || (moveDirection.x < 0 && _isTurnedRight))
         {
-            Flip();
+            _isTurnedRight = !_isTurnedRight;
+            transform.Flip();
         }
-    }
-
-    public void Flip()
-    {
-        _isTurnedRight = !_isTurnedRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
     }
 }

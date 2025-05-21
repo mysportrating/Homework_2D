@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerMover), typeof(CollisionHandler))]
 [RequireComponent(typeof(PlayerAnimator))]

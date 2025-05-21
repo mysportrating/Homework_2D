@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Enemy : MonoBehaviour
 {
@@ -55,15 +51,8 @@ public class Enemy : MonoBehaviour
         // Смена направления взгляда врага
         if ((transform.position.x < _target.position.x && !_isTurnedRight) || (transform.position.x > _target.position.x && _isTurnedRight))
         {
-            Flip();
+            _isTurnedRight = !_isTurnedRight;
+            transform.Flip();
         }
-    }
-
-    public void Flip()
-    {
-        _isTurnedRight = !_isTurnedRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
     }
 }
