@@ -344,7 +344,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.74, y: 0.35999998, z: 0}
+  m_LocalPosition: {x: -2.99, y: -4.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 702745900}
   - component: {fileID: 702745899}
   - component: {fileID: 702745901}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,7 +488,7 @@ Transform:
   m_GameObject: {fileID: 702745897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.93, y: 8.09, z: 0}
+  m_LocalPosition: {x: -10.4, y: 6.86, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -577,6 +577,10 @@ MonoBehaviour:
   - {fileID: 185208088}
   _speed: 2
   _maxSqrDistance: 0.05
+  _visionDistance: {x: 9, y: 6}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &706398510
 GameObject:
   m_ObjectHideFlags: 0
@@ -5130,7 +5134,7 @@ Transform:
   m_GameObject: {fileID: 1587978032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.74, y: 0.35999998, z: 0}
+  m_LocalPosition: {x: -2.99, y: -4.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24146,9 +24150,9 @@ GameObject:
   - component: {fileID: 2117936438}
   - component: {fileID: 2117936439}
   - component: {fileID: 2117936432}
-  - component: {fileID: 2117936434}
+  - component: {fileID: 2117936440}
   - component: {fileID: 2117936435}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24216,7 +24220,7 @@ Transform:
   m_GameObject: {fileID: 2117936428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.61, y: -0.05, z: 0}
+  m_LocalPosition: {x: 3.36, y: -4.69, z: 0}
   m_LocalScale: {x: -1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -24261,47 +24265,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937995838f8ae43448dcc2b5dccc5fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _normalSpeed: 3
+  _normalSpeed: 3.5
   _boostedSpeed: 5
-  _currentSpeed: 3
+  _currentSpeed: 3.5
   _cooldownTimer: 0
   _boostDuration: 1.5
   _boostCooldown: 4
---- !u!70 &2117936434
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117936428}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.040150046, y: -0.3736419}
-  m_Size: {x: 0.2908814, y: 0.2908815}
-  m_Direction: 0
 --- !u!95 &2117936435
 Animator:
   serializedVersion: 5
@@ -24372,6 +24341,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d720dce7ff4e543ba02bfe9122534e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &2117936440
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117936428}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.061675884, y: -0.2423423}
+  serializedVersion: 2
+  m_Radius: 0.26197046
 --- !u!1001 &3581680159066469889
 PrefabInstance:
   m_ObjectHideFlags: 0
