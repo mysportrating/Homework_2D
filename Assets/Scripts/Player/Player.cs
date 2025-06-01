@@ -1,13 +1,14 @@
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader), typeof(PlayerMover), typeof(CollisionHandler))]
-[RequireComponent(typeof(PlayerAnimator))]
+[RequireComponent(typeof(PlayerAnimator), typeof(Flipper))]
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
     private PlayerMover _mover;
     private PlayerAnimator _animator;
     private CollisionHandler _collisionHandler;
+    private Flipper _flipper;
 
     private IInteractable _interactable;
 
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
         _mover = GetComponent<PlayerMover>();
         _animator = GetComponent<PlayerAnimator>();
         _collisionHandler = GetComponent<CollisionHandler>();
+        _flipper = GetComponent<Flipper>();
     }
 
     // Подписываемся на события
@@ -39,7 +41,11 @@ public class Player : MonoBehaviour
 
         // Выполняем движение игрока в сторону направления вектора, если вектор существует
         if (_inputReader.MoveDirection != null)
+        {
             _mover.Move(_inputReader.MoveDirection, _inputReader.GetIsBoosted());
+            // Смена направления взгляда игрока
+            _flipper.LookAtTarget(transform.position + Vector3.right * _inputReader.MoveDirection.x);
+        }
 
         // Проверяем взаимодействие с интерактивными предметами
         if (_inputReader.GetIsInteract() && _interactable != null)

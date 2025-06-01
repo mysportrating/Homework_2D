@@ -11,7 +11,6 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _boostCooldown = 4.0f;
 
     private Rigidbody2D _rigidbody;
-    private bool _isTurnedRight = true;
 
     private void Start()
     {
@@ -37,13 +36,6 @@ public class PlayerMover : MonoBehaviour
         if (_boostCooldown >= _cooldownTimer + _boostDuration)
         {
             _currentSpeed = _normalSpeed;
-        }
-
-        // Смена направления взгляда игрока
-        if ((moveDirection.x > 0 && !_isTurnedRight) || (moveDirection.x < 0 && _isTurnedRight))
-        {
-            _isTurnedRight = !_isTurnedRight;
-            transform.Flip();
         }
     }
 }

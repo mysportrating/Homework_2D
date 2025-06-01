@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private WayPoint[] _wayPoints;
@@ -10,14 +11,14 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private Transform _target;
-    private bool _isTurnedRight = true;
+    private Flipper _flipper;
     private int _wayPointIndex;
 
     private void Start()
     {
         // Получаем необходимые компоненты объекта
         _rigidbody = GetComponent<Rigidbody2D>();
-
+        _flipper = GetComponent<Flipper>();
         _target = _wayPoints[_wayPointIndex].transform;
     }
 
@@ -98,19 +99,24 @@ public class Enemy : MonoBehaviour
         _target = _wayPoints[_wayPointIndex].transform;
 
         // Смена направления взгляда врага
-        if ((transform.position.x < _target.position.x && !_isTurnedRight) || (transform.position.x > _target.position.x && _isTurnedRight))
-        {
-            _isTurnedRight = !_isTurnedRight;
-            transform.Flip();
-        }
+        _flipper.LookAtTarget(_target.position);
     }
 
     private Vector2 GetVisionArea()
     {
         //Офсет (смещение) области видимости противника для реалистичности
         float halfCoefficient = 1.8f;
-        int directionCoefficient = _isTurnedRight ? 1 : -1;
-        float originX = transform.position.x + _visionDistance.x / halfCoefficient * directionCoefficient;
+        float originX = 0;
+        if (_flipper != null)
+        {
+            float directionCoefficient = _flipper.IsTurnedRight ? 1 : -1;
+            originX = transform.position.x + _visionDistance.x / halfCoefficient * directionCoefficient;
+        }
+        else
+        {
+            originX = transform.position.x + _visionDistance.x / halfCoefficient;
+        }
+
         return new Vector2(originX, transform.position.y);
     }
 
