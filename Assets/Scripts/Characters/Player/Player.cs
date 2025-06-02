@@ -1,11 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InputReader), typeof(PlayerMover), typeof(CollisionHandler))]
+[RequireComponent(typeof(InputReader), typeof(Mover), typeof(CollisionHandler))]
 [RequireComponent(typeof(PlayerAnimator), typeof(Flipper))]
 public class Player : MonoBehaviour
 {
     private InputReader _inputReader;
-    private PlayerMover _mover;
+    private Mover _mover;
     private PlayerAnimator _animator;
     private CollisionHandler _collisionHandler;
     private Flipper _flipper;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     {
         // Получаем необходимые компоненты объекта
         _inputReader = GetComponent<InputReader>();
-        _mover = GetComponent<PlayerMover>();
+        _mover = GetComponent<Mover>();
         _animator = GetComponent<PlayerAnimator>();
         _collisionHandler = GetComponent<CollisionHandler>();
         _flipper = GetComponent<Flipper>();

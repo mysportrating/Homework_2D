@@ -473,6 +473,8 @@ GameObject:
   - component: {fileID: 702745899}
   - component: {fileID: 702745901}
   - component: {fileID: 702745902}
+  - component: {fileID: 702745903}
+  - component: {fileID: 702745904}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -576,12 +578,7 @@ MonoBehaviour:
   - {fileID: 518520576}
   - {fileID: 1843939273}
   - {fileID: 185208088}
-  _speed: 2
   _maxSqrDistance: 0.05
-  _visionDistance: {x: 9, y: 8}
-  _targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &702745902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +591,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1132224020b3f498d9421e562ba482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &702745903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702745897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae723181b651bc46a11eb6803d684d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visionDistance: {x: 9, y: 7.5}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &702745904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702745897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937995838f8ae43448dcc2b5dccc5fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normalSpeed: 0
+  _boostedSpeed: 0
+  _currentSpeed: 2
+  _cooldownTimer: 0
+  _boostDuration: 0
+  _boostCooldown: 0
 --- !u!1 &706398510
 GameObject:
   m_ObjectHideFlags: 0

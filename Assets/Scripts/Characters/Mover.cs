@@ -1,13 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMover : MonoBehaviour
+public class Mover : MonoBehaviour
 {
-    [SerializeField] private float _normalSpeed = 3.0f;
+    [SerializeField] private float _normalSpeed = 3.5f;
     [SerializeField] private float _boostedSpeed = 5.0f;
-    [SerializeField] private float _currentSpeed = 3.0f;
+    [SerializeField] private float _currentSpeed = 3.5f;
     [SerializeField] private float _cooldownTimer = 0.0f;
-    [SerializeField] private float _boostDuration = 1.0f;
+    [SerializeField] private float _boostDuration = 1.5f;
     [SerializeField] private float _boostCooldown = 4.0f;
 
     private Rigidbody2D _rigidbody;
@@ -37,5 +37,12 @@ public class PlayerMover : MonoBehaviour
         {
             _currentSpeed = _normalSpeed;
         }
+    }
+
+    public void Move(Transform target)
+    {
+        // Перемещение противника через смещение позиции противника в сторону новой точки (цели)
+        Vector2 newPosition = Vector2.MoveTowards(transform.position, target.position, _currentSpeed * Time.deltaTime);
+        _rigidbody.MovePosition(newPosition);
     }
 }
